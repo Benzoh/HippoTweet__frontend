@@ -9,9 +9,10 @@ import images from 'app/src/images';
 import useCachedResources from 'app/src/hooks/useCachedResources';
 import useColorScheme from 'app/src/hooks/useColorScheme';
 import Navigation from 'app/src/navigation';
+import MainTabNavigator from 'app/src/navigation/MainTabNavigator';
 
 interface Props {
-  skipLoadingScreen: Boolean;
+  skipLoadingScreen: boolean;
 }
 
 export default function App(props: Props) {
@@ -26,19 +27,12 @@ export default function App(props: Props) {
   }
 
   if (!isLoadingComplete && !skipLoadingScreen) {
-    return (
-      <AppLoading startAsync={loadResourcesAsync} onError={error => console.warn(error)} />
-    )
+    return <AppLoading startAsync={loadResourcesAsync} onError={error => console.warn(error)} />;
   } else {
-    return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
-    );
+    return <MainTabNavigator />;
   }
 }
 
 App.defaultProps = {
   skipLoadingScreen: false,
-}
+};
