@@ -1,34 +1,40 @@
 import React from 'react';
-import { Constants } from 'expo';
-import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from 'app/src/screens/HomeScreen';
 import UserScreen from 'app/src/screens/UserScreen';
-import { HomeTabIcon, MeTabIcon, SearchTabIcon, TabBar } from 'app/src/components/Tab';
-import { TabActionHelpers } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
-export function Tabs() {
+function Tabs() {
   return (
-    <Tab.Navigator
-      initialRouteName={HomeTab}
-      tabBarOptions={{
-        showLabel: false,
-        activeTintColor: '#333',
-        inactiveTintColor: '#bbb',
-        style: {
-          backgroundColor: Constants.manifest.extra.backgroundColor,
-        },
-      }}
-    >
+    <Tab.Navigator>
       <Tab.Screen
         name="HomeTab"
         component={HomeScreen}
-        options={{ tabBarIcon: SearchTabIcon({ tintColor: '#333' }) }}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="home" color={color} size={size} />,
+        }}
       />
-      <Tab.Screen name="MeTab" component={UserScreen} options={{ tabBarIcon: MeTabIcon({ tintColor: '#333' }) }} />
+      <Tab.Screen
+        name="MeTab"
+        component={UserScreen}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="account" color={color} size={size} />,
+        }}
+      />
     </Tab.Navigator>
+  );
+}
+
+export default function () {
+  return (
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
   );
 }
