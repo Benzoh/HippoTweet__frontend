@@ -2,10 +2,16 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, Platform } from 'react-native';
 
 import HomeScreen from 'app/src/screens/HomeScreen';
 import UserScreen from 'app/src/screens/UserScreen';
 
+const styles = StyleSheet.create({
+  icon: {
+    marginBottom: -3,
+  },
+});
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
@@ -16,7 +22,9 @@ function Tabs() {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="home" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} style={styles.icon} />
+          ),
         }}
       />
       <Tab.Screen
@@ -24,7 +32,9 @@ function Tabs() {
         component={UserScreen}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="account" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} style={styles.icon} />
+          ),
         }}
       />
     </Tab.Navigator>
