@@ -1,7 +1,7 @@
 import React from 'react';
 import { ViewStyle, Keyboard } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import colors from 'app/src/constants/Colors';
+import { COLOR } from 'app/src/constants/theme';
 
 interface Props {
   label: string;
@@ -29,7 +29,7 @@ interface Props {
 
 const theme = {
   colors: {
-    background: '#fff',
+    background: COLOR.WHITE,
     text: '#333',
   },
 };
@@ -49,7 +49,6 @@ export function TextField(props: Props) {
       autoCompleteType={autoCompleteType}
       autoCapitalize="none"
       secureTextEntry={secureTextEntry}
-      accessibilityStates={disabled ? ['disabled'] : undefined}
       testID={testID}
     />
   );

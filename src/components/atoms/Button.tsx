@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
-import colors from 'app/src/constants/Colors';
+import { COLOR } from 'app/src/constants/theme';
 
 const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: '900',
-    color: '#fff',
+    color: COLOR.WHITE,
   },
 });
 
@@ -29,7 +29,7 @@ export default function Button(props: Props) {
     style,
     textStyle,
     label,
-    color = '#6cf',
+    color = COLOR.MAIN,
     disabled,
     disabledColor = '#ccc',
     icon,
@@ -46,7 +46,6 @@ export default function Button(props: Props) {
         backgroundColor: disabled ? disabledColor : color,
       }}
       icon={icon}
-      accessibilityStates={disabled ? ['disabled'] : undefined}
       testID={testID}
     >
       {label && <Text style={[styles.text, textStyle]}>{label}</Text>}
