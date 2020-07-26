@@ -9,12 +9,13 @@ interface Props {
 
 export default function (props: Props) {
   // console.log(props.currentPage);
+  return <MainTabNavigator />;
 
-  if (props.currentPage === 'Main') {
-    console.log('main!!');
-    return <MainTabNavigator />;
-  }
+  // if (props.currentPage === 'Main') {
+  //   return <MainTabNavigator />;
+  //   console.log('main!!');
+  // }
 
-  console.log('sub!!');
-  return <SubStackNavigator />;
+  // console.log('sub!!');
+  // return <SubStackNavigator />;
 }
