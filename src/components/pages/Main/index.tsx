@@ -17,19 +17,9 @@ export default function Main() {
   const { navigate } = useNavigation();
 
   return (
-    <>
-      <View style={styles.container}>
-        <Header />
-        <Tweet />
-        <Text>main</Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigate('Sub');
-          }}
-        >
-          <Text>go to sub</Text>
-        </TouchableOpacity>
-      </View>
-    </>
+    <View style={styles.container}>
+      <Header />
+      <Tweet />
+    </View>
   );
 }

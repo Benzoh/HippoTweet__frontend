@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  View,
+  Text,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableOpacity,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { TextField } from 'app/src/components/atoms/TextField';
@@ -18,7 +26,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
-    fontSize: 16,
+    fontSize: 18,
   },
   buttonWrap: {
     display: 'flex',
@@ -30,8 +38,9 @@ const styles = StyleSheet.create({
     height: 40,
     width: 100,
   },
-  bottonText: {
+  buttonText: {
     fontSize: 18,
+    fontWeight: 'normal',
   },
 });
 
@@ -41,28 +50,32 @@ export default () => {
   const iconName = 'ios-close';
 
   return (
-    <View style={styles.container}>
-      <TextField
-        label="What's going on?"
-        value={tweet}
-        style={styles.textField}
-        onChangeText={tweet => setTweet({ tweet })}
-      />
-      <View>
-        {/* TODO: Count */}
-        <Text style={{ textAlign: 'right' }}>0/140</Text>
-      </View>
-      <View style={styles.buttonWrap}>
-        <View style={{ paddingLeft: 5 }}>
-          <Ionicons name={iconName} size={36} color={COLOR.MAIN} />
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'position'} style={styles.container}>
+      <TouchableOpacity onPress={Keyboard.dismiss}>
+        <View>
+          <TextField
+            label="What's going on?"
+            value={tweet}
+            style={styles.textField}
+            onChangeText={tweet => setTweet({ tweet })}
+          />
+          <View>
+            {/* TODO: Count */}
+            <Text style={{ textAlign: 'right', marginTop: Platform.OS === 'ios' ? 5 : 0 }}>0/140</Text>
+          </View>
+          <View style={styles.buttonWrap}>
+            <View style={{ paddingLeft: 5 }}>
+              <Ionicons name={iconName} size={36} color={COLOR.MAIN} />
+            </View>
+            <Button
+              style={styles.button}
+              textStyle={styles.buttonText}
+              label="Tweet"
+              onPress={() => console.log('TODO: Post')}
+            />
+          </View>
         </View>
-        <Button
-          style={styles.button}
-          textStyle={styles.bottonText}
-          label="Tweet"
-          onPress={() => console.log('TODO: Post')}
-        />
-      </View>
-    </View>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   );
 };

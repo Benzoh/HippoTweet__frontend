@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Platform } from 'react-native';
 
 import { COLOR } from 'app/src/constants/theme';
 import Avatar from 'app/src/components/atoms/Avatar';
@@ -7,13 +7,14 @@ import Avatar from 'app/src/components/atoms/Avatar';
 const styles = StyleSheet.create({
   header: {
     width: '100%',
-    height: 60,
+    height: Platform.OS === 'ios' ? 80 : 60,
     backgroundColor: COLOR.MAIN,
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
     paddingLeft: 15,
     paddingRight: 15,
+    paddingTop: Platform.OS === 'ios' ? 20 : 0,
   },
   text: {
     textAlign: 'center',
