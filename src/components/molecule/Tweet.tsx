@@ -6,7 +6,7 @@ import {
   Text,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -51,7 +51,7 @@ export default () => {
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'position'} style={styles.container}>
-      <TouchableOpacity onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
           <TextField
             label="What's going on?"
@@ -65,17 +65,17 @@ export default () => {
           </View>
           <View style={styles.buttonWrap}>
             <View style={{ paddingLeft: 5 }}>
-              <Ionicons name={iconName} size={36} color={COLOR.MAIN} />
+              <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => alert('TODO: remove text')} />
             </View>
             <Button
               style={styles.button}
               textStyle={styles.buttonText}
               label="Tweet"
-              onPress={() => console.log('TODO: Post')}
+              onPress={() => alert('TODO: Post')}
             />
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
