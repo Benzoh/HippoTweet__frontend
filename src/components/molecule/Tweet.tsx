@@ -13,6 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TextField } from 'app/src/components/atoms/TextField';
 import Button from 'app/src/components/atoms/Button';
 import { COLOR } from 'app/src/constants/theme';
+import post from 'app/src/lib/post';
 
 const styles = StyleSheet.create({
   container: {
@@ -67,12 +68,7 @@ export default () => {
             <View style={{ paddingLeft: 5 }}>
               <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => setTweet('')} />
             </View>
-            <Button
-              style={styles.button}
-              textStyle={styles.buttonText}
-              label="Tweet"
-              onPress={() => alert('TODO: Post')}
-            />
+            <Button style={styles.button} textStyle={styles.buttonText} label="Tweet" onPress={() => post({ tweet })} />
           </View>
         </View>
       </TouchableWithoutFeedback>
