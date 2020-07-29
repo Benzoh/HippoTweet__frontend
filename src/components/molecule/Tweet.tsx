@@ -65,7 +65,7 @@ export default () => {
           </View>
           <View style={styles.buttonWrap}>
             <View style={{ paddingLeft: 5 }}>
-              <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => alert('TODO: remove text')} />
+              <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => setTweet('')} />
             </View>
             <Button
               style={styles.button}
