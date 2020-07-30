@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 });
 
 export default () => {
-  const [tweet, setTweet] = useState();
+  const [value, onChangeText] = React.useState('');
   // const iconName = 'ios-trash';
   const iconName = 'ios-close';
 
@@ -56,9 +56,9 @@ export default () => {
         <View>
           <TextField
             label="What's going on?"
-            value={tweet}
+            value={value}
             style={styles.textField}
-            onChangeText={tweet => setTweet({ tweet })}
+            onChangeText={text => onChangeText(text)}
           />
           <View>
             {/* TODO: Count */}
@@ -66,9 +66,9 @@ export default () => {
           </View>
           <View style={styles.buttonWrap}>
             <View style={{ paddingLeft: 5 }}>
-              <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => setTweet('')} />
+              <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => onChangeText('')} />
             </View>
-            <Button style={styles.button} textStyle={styles.buttonText} label="Tweet" onPress={() => post({ tweet })} />
+            <Button style={styles.button} textStyle={styles.buttonText} label="Tweet" onPress={() => post(value)} />
           </View>
         </View>
       </TouchableWithoutFeedback>
