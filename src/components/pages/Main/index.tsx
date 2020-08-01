@@ -13,8 +13,16 @@ const styles = StyleSheet.create({
   },
 });
 
+// TODO: 認証なければ
+// const auth = true;
+const auth = false;
+
 export default function Main() {
   const { navigate } = useNavigation();
+
+  if (!auth) {
+    navigate('Login');
+  }
 
   return (
     <View style={styles.container}>
