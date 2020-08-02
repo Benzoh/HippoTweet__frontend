@@ -1,3 +1,3 @@
 export const CONFIG = {
-  APP_NAME: 'theTweet',
+  APP_NAME: 'HippoTweet!',
 };

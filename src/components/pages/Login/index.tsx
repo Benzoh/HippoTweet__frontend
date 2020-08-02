@@ -1,12 +1,15 @@
+/* eslint-disable react-native/no-color-literals */
 import React, { useState, useCallback } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CONFIG } from 'app/src/constants/config';
 import * as AuthSession from 'expo-auth-session';
+import Constants from 'expo-constants';
 
-// const requestTokenURL = "http://192.168.0.8:3000/request-token";
-const requestTokenURL = "http://localhost:3000/request-token";
-const accessTokenURL = "http://localhost:3000/access-token";
+const accessTokenURL = Constants.manifest.extra.EXPO_ACCESS_TOKEN_URL;
+const requestTokenURL = Constants.manifest.extra.EXPO_REQUEST_TOKEN_URL;
+// const accessTokenURL = "http://localhost:3000/access-token";
+// const requestTokenURL = "http://localhost:3000/request-token";
 
 const redirect = AuthSession.makeRedirectUri();
 // This is the callback or redirect URL you need to whitelist in your Twitter app
@@ -15,23 +18,23 @@ console.log(`Callback URL: ${redirect}`);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   loading: {
-    backgroundColor: "rgba(0,0,0,0.4)",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 40,
   },
   error: {
     fontSize: 16,
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 40,
   },
 });
