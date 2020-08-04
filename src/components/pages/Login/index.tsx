@@ -6,12 +6,15 @@ import { CONFIG } from 'app/src/constants/config';
 import * as AuthSession from 'expo-auth-session';
 import Constants from 'expo-constants';
 
-const accessTokenURL = Constants.manifest.extra.EXPO_ACCESS_TOKEN_URL;
-const requestTokenURL = Constants.manifest.extra.EXPO_REQUEST_TOKEN_URL;
+const accessTokenURL = Constants.manifest.extra.accessTokenUrl;
+const requestTokenURL = Constants.manifest.extra.requestTokenUrl;
 // const accessTokenURL = "http://localhost:3000/access-token";
 // const requestTokenURL = "http://localhost:3000/request-token";
 
-const redirect = AuthSession.makeRedirectUri();
+// FIXME: ローカルIPじゃだめでしょ？？
+// const redirect = AuthSession.makeRedirectUri();
+const redirect = AuthSession.getRedirectUrl('redirect');
+
 // This is the callback or redirect URL you need to whitelist in your Twitter app
 console.log(`Callback URL: ${redirect}`);
 
@@ -39,6 +42,18 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * Converts an object to a query string.
+ */
+function toQueryString(params) {
+  return (
+    '?' +
+    Object.entries(params)
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+      .join('&')
+  );
+}
+
 export default function Login() {
   const [username, setUsername] = useState();
   const [loading, setLoading] = useState(false);
@@ -56,25 +71,21 @@ export default function Login() {
     try {
       // Step #1 - first we need to fetch a request token to start the browser-based authentication flow
       const requestParams = toQueryString({ callback_url: redirect });
-      const requestTokens = await fetch(
-        requestTokenURL + requestParams
-      ).then((res) => res.json());
+      const requestTokens = await fetch(requestTokenURL + requestParams).then(res => res.json());
 
-      console.log("Request tokens fetched!", requestTokens);
+      console.log('Request tokens fetched!', requestTokens);
 
       // Step #2 - after we received the request tokens, we can start the auth session flow using these tokens
       const authResponse = await AuthSession.startAsync({
-        authUrl:
-          "https://api.twitter.com/oauth/authenticate" +
-          toQueryString(requestTokens),
+        authUrl: 'https://api.twitter.com/oauth/authenticate' + toQueryString(requestTokens),
       });
 
-      console.log("Auth response received!", authResponse);
+      console.log('Auth response received!', authResponse);
 
       // Validate if the auth session response is successful
       // Note, we still receive a `authResponse.type = 'success'`, thats why we need to check on the params itself
       if (authResponse.params && authResponse.params.denied) {
-        return setError("AuthSession failed, user did not authorize the app");
+        return setError('AuthSession failed, user did not authorize the app');
       }
 
       // Step #3 - when the user (successfully) authorized the app, we will receive a verification code.
@@ -84,17 +95,15 @@ export default function Login() {
         oauth_token_secret: requestTokens.oauth_token_secret,
         oauth_verifier: authResponse.params.oauth_verifier,
       });
-      const accessTokens = await fetch(
-        accessTokenURL + accessParams
-      ).then((res) => res.json());
+      const accessTokens = await fetch(accessTokenURL + accessParams).then(res => res.json());
 
-      console.log("Access tokens fetched!", accessTokens);
+      console.log('Access tokens fetched!', accessTokens);
 
       // Now let's store the username in our state to render it.
       // You might want to store the `oauth_token` and `oauth_token_secret` for future use.
       setUsername(accessTokens.screen_name);
     } catch (error) {
-      console.log("Something went wrong...", error);
+      console.log('Something went wrong...', error);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -123,20 +132,5 @@ export default function Login() {
         </View>
       )}
     </View>
-  );
-}
-
-/**
- * Converts an object to a query string.
- */
-function toQueryString(params) {
-  return (
-    "?" +
-    Object.entries(params)
-      .map(
-        ([key, value]) =>
-          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-      )
-      .join("&")
   );
 }
