@@ -1,6 +1,7 @@
+/* eslint-disable no-catch-shadow */
 /* eslint-disable react-native/no-color-literals */
 import React, { useState, useCallback } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, Button } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, Button, AsyncStorage } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CONFIG } from 'app/src/constants/config';
 import * as AuthSession from 'expo-auth-session';
@@ -58,12 +59,22 @@ export default function Login() {
   const [username, setUsername] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
+  const { navigate } = useNavigation();
 
   const onLogout = useCallback(() => {
     setUsername();
     setLoading(false);
     setError();
   }, []);
+
+  const _storeData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      // Error saving data
+      console.log('_storeDate', { error });
+    }
+  };
 
   const onLogin = useCallback(async () => {
     setLoading(true);
@@ -102,6 +113,11 @@ export default function Login() {
       // Now let's store the username in our state to render it.
       // You might want to store the `oauth_token` and `oauth_token_secret` for future use.
       setUsername(accessTokens.screen_name);
+
+      _storeData('user', accessTokens);
+
+      // navigate to home
+      navigate('Main');
     } catch (error) {
       console.log('Something went wrong...', error);
       setError(error.message);

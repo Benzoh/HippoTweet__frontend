@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Header from 'app/src/components/molecule/Header';
@@ -13,15 +13,29 @@ const styles = StyleSheet.create({
   },
 });
 
-// TODO: 認証なければ
-// const auth = true;
-const auth = false;
-
 export default function Main() {
   const { navigate } = useNavigation();
+  const [auth, setAuth] = useState();
+
+  const _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('user');
+      if (value !== null) {
+        // We have data!!
+        // console.log('user info ->', JSON.parse(value));
+        setAuth(JSON.parse(value));
+      } else {
+        navigate('Login');
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log({ error });
+    }
+  };
 
   if (!auth) {
-    navigate('Login');
+    console.log('auth', { auth });
+    _retrieveData();
   }
 
   return (
