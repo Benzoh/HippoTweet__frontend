@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Header from 'app/src/components/molecule/Header';
 import Tweet from 'app/src/components/molecule/Tweet';
+import { retrieveData } from 'app/src/lib/localStorage';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,23 +18,13 @@ export default function Main() {
   const { navigate } = useNavigation();
   const [auth, setAuth] = useState();
 
-  const _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('user');
-      if (value !== null) {
-        const user = JSON.parse(value);
-        setAuth(user);
-      } else {
+  if (!auth) {
+    retrieveData('TWITTER_USER').then(result => {
+      if (!result) {
         navigate('Login');
       }
-    } catch (error) {
-      console.log({ error });
-    }
-  };
-
-  if (!auth) {
-    // console.log('auth', { auth });
-    _retrieveData();
+      setAuth(result);
+    });
   }
 
   return (
