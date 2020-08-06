@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, AsyncStorage, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { retrieveData, removeData } from 'app/src/lib/localStorage';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -14,38 +16,24 @@ export default function Sub() {
   const { navigate } = useNavigation();
   const [auth, setAuth] = useState();
 
-  const _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('user');
-      if (value !== null) {
-        const user = JSON.parse(value);
-        setAuth(user);
-      } else {
-        navigate('Login');
-      }
-    } catch (error) {
-      console.log({ error });
-    }
-  };
-
-  const _removeData = async () => {
-    try {
-      await AsyncStorage.removeItem('user');
-      navigate('Login');
-    } catch (error) {
-      console.log('_removeDate', { error });
-    }
-  };
-
   // console.log('__auth__', { auth });
   if (!auth) {
-    _retrieveData();
+    retrieveData('TWITTER_USER').then(result => {
+      setAuth(result);
+    });
   }
 
   return (
     <View style={styles.container}>
       <Text>User: @{auth.screen_name}</Text>
-      <Button title="Logout" onPress={_removeData} />
+      <Button
+        title="Logout"
+        onPress={() =>
+          removeData('TWITTER_USER').then(() => {
+            navigate('Login');
+          })
+        }
+      />
     </View>
   );
 }
