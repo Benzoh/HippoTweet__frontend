@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable no-catch-shadow */
 /* eslint-disable react-native/no-color-literals */
 import React, { useState, useCallback } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, Button, AsyncStorage } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Button, AsyncStorage } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { CONFIG } from 'app/src/constants/config';
+// import { CONFIG } from 'app/src/constants/config';
 import * as AuthSession from 'expo-auth-session';
 import Constants from 'expo-constants';
+
+import { storeData } from 'app/src/lib/localStorage';
 
 const accessTokenURL = Constants.manifest.extra.accessTokenUrl;
 const requestTokenURL = Constants.manifest.extra.requestTokenUrl;
@@ -17,7 +20,7 @@ const requestTokenURL = Constants.manifest.extra.requestTokenUrl;
 const redirect = AuthSession.getRedirectUrl('redirect');
 
 // This is the callback or redirect URL you need to whitelist in your Twitter app
-console.log(`Callback URL: ${redirect}`);
+// console.log(`Callback URL: ${redirect}`);
 
 const styles = StyleSheet.create({
   container: {
@@ -30,11 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.4)',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-    marginTop: 40,
   },
   error: {
     fontSize: 16,
@@ -56,25 +54,9 @@ function toQueryString(params) {
 }
 
 export default function Login() {
-  const [username, setUsername] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const { navigate } = useNavigation();
-
-  const onLogout = useCallback(() => {
-    setUsername();
-    setLoading(false);
-    setError();
-  }, []);
-
-  const _storeData = async (key, value) => {
-    try {
-      await AsyncStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      // Error saving data
-      console.log('_storeDate', { error });
-    }
-  };
 
   const onLogin = useCallback(async () => {
     setLoading(true);
@@ -110,11 +92,7 @@ export default function Login() {
 
       console.log('Access tokens fetched!', accessTokens);
 
-      // Now let's store the username in our state to render it.
-      // You might want to store the `oauth_token` and `oauth_token_secret` for future use.
-      setUsername(accessTokens.screen_name);
-
-      _storeData('user', accessTokens);
+      storeData('TWITTER_USER', accessTokens);
 
       // navigate to home
       navigate('Main');
@@ -128,17 +106,9 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      {username !== undefined ? (
-        <View>
-          <Text style={styles.title}>Hi {username}!</Text>
-          <Button title="Logout to try again" onPress={onLogout} />
-        </View>
-      ) : (
-          <View>
-            <Text style={styles.title}>Example: Twitter login</Text>
-            <Button title="Login with Twitter" onPress={onLogin} />
-          </View>
-        )}
+      <View>
+        <Button title="Login with Twitter" onPress={onLogin} />
+      </View>
 
       {error !== undefined && <Text style={styles.error}>Error: {error}</Text>}
 
