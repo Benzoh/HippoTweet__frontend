@@ -21,20 +21,18 @@ export default function Main() {
     try {
       const value = await AsyncStorage.getItem('user');
       if (value !== null) {
-        // We have data!!
-        // console.log('user info ->', JSON.parse(value));
-        setAuth(JSON.parse(value));
+        const user = JSON.parse(value);
+        setAuth(user);
       } else {
         navigate('Login');
       }
     } catch (error) {
-      // Error retrieving data
       console.log({ error });
     }
   };
 
   if (!auth) {
-    console.log('auth', { auth });
+    // console.log('auth', { auth });
     _retrieveData();
   }
 

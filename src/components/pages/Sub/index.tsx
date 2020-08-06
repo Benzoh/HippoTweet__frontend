@@ -18,14 +18,12 @@ export default function Sub() {
     try {
       const value = await AsyncStorage.getItem('user');
       if (value !== null) {
-        // We have data!!
-        console.log('user info ->', JSON.parse(value));
-        setAuth(JSON.parse(value));
+        const user = JSON.parse(value);
+        setAuth(user);
       } else {
         navigate('Login');
       }
     } catch (error) {
-      // Error retrieving data
       console.log({ error });
     }
   };
@@ -35,19 +33,18 @@ export default function Sub() {
       await AsyncStorage.removeItem('user');
       navigate('Login');
     } catch (error) {
-      // Error saving data
       console.log('_removeDate', { error });
     }
   };
 
+  // console.log('__auth__', { auth });
   if (!auth) {
-    console.log('auth', { auth });
     _retrieveData();
   }
 
   return (
     <View style={styles.container}>
-      <Text>User: screen_name</Text>
+      <Text>User: @{auth.screen_name}</Text>
       <Button title="Logout" onPress={_removeData} />
     </View>
   );
