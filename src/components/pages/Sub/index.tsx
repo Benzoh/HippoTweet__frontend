@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, AsyncStorage, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -23,13 +23,19 @@ export default function Sub() {
     });
   }
 
+  // FIXME: これなんか微妙。
+  useEffect(() => {
+    console.log('useEffect', { auth });
+  }, [auth]);
+
   return (
     <View style={styles.container}>
-      <Text>User: @{auth.screen_name}</Text>
+      <Text>{auth ? auth.screen_name : ''}</Text>
       <Button
         title="Logout"
         onPress={() =>
           removeData('TWITTER_USER').then(() => {
+            setAuth(null);
             navigate('Login');
           })
         }
