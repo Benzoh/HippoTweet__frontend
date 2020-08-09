@@ -26,6 +26,7 @@ export default {
   extra: {
     accessTokenUrl: process.env.EXPO_ACCESS_TOKEN_URL,
     requestTokenUrl: process.env.EXPO_REQUEST_TOKEN_URL,
+    getUserObjectUrl: process.env.EXPO_GET_USER_OBJECT_URL,
     backgroundColor: '#fafafa',
   },
 };

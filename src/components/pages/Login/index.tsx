@@ -12,6 +12,7 @@ import { storeData } from 'app/src/lib/localStorage';
 
 const accessTokenURL = Constants.manifest.extra.accessTokenUrl;
 const requestTokenURL = Constants.manifest.extra.requestTokenUrl;
+const getUserObjectURL = Constants.manifest.extra.getUserObjectUrl;
 // const accessTokenURL = "http://localhost:3000/access-token";
 // const requestTokenURL = "http://localhost:3000/request-token";
 
@@ -89,10 +90,19 @@ export default function Login() {
         oauth_verifier: authResponse.params.oauth_verifier,
       });
       const accessTokens = await fetch(accessTokenURL + accessParams).then(res => res.json());
-
       console.log('Access tokens fetched!', accessTokens);
 
-      storeData('TWITTER_USER', accessTokens);
+      storeData('TWITTER_TOKEN', accessTokens);
+
+      const accessParams2 = toQueryString({
+        access_token: accessTokens.oauth_token,
+        access_token_secret: accessTokens.oauth_token_secret,
+        screen_name: accessTokens.screen_name,
+      });
+      const userObject = await fetch(getUserObjectURL + accessParams2).then(res => res.json());
+      console.log('User info fetched!', userObject);
+
+      storeData('TWITTER_USER_INFO', userObject);
 
       // navigate to home
       navigate('Main');

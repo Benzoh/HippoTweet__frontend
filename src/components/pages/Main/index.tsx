@@ -19,7 +19,7 @@ export default function Main() {
   const [auth, setAuth] = useState();
 
   if (!auth) {
-    retrieveData('TWITTER_USER').then(result => {
+    retrieveData('TWITTER_TOKEN').then(result => {
       if (!result) {
         navigate('Login');
       }
