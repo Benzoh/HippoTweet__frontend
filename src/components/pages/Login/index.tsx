@@ -67,14 +67,10 @@ export default function Login() {
       const requestParams = toQueryString({ callback_url: redirect });
       const requestTokens = await fetch(requestTokenURL + requestParams).then(res => res.json());
 
-      console.log('Request tokens fetched!', requestTokens);
-
       // Step #2 - after we received the request tokens, we can start the auth session flow using these tokens
       const authResponse = await AuthSession.startAsync({
         authUrl: 'https://api.twitter.com/oauth/authenticate' + toQueryString(requestTokens),
       });
-
-      console.log('Auth response received!', authResponse);
 
       // Validate if the auth session response is successful
       // Note, we still receive a `authResponse.type = 'success'`, thats why we need to check on the params itself
@@ -90,7 +86,6 @@ export default function Login() {
         oauth_verifier: authResponse.params.oauth_verifier,
       });
       const accessTokens = await fetch(accessTokenURL + accessParams).then(res => res.json());
-      console.log('Access tokens fetched!', accessTokens);
 
       storeData('TWITTER_TOKEN', accessTokens);
 
@@ -100,12 +95,14 @@ export default function Login() {
         screen_name: accessTokens.screen_name,
       });
       const userObject = await fetch(getUserObjectURL + accessParams2).then(res => res.json());
-      console.log('User info fetched!', userObject);
 
-      storeData('TWITTER_USER_INFO', userObject);
-
-      // navigate to home
-      navigate('Main');
+      storeData('TWITTER_USER_INFO', userObject[0])
+        .then(() => {
+          navigate('Main');
+        })
+        .catch(() => {
+          console.log('store data error;');
+        });
     } catch (error) {
       console.log('Something went wrong...', error);
       setError(error.message);

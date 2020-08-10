@@ -23,14 +23,25 @@ const styles = StyleSheet.create({
   },
 });
 
-export default () => {
-  // TODO: to twitter avatar
-  const source = React.useMemo(() => require('app/assets/images/dummy-avatar.png'), []);
+interface Props {
+  user: {
+    screen_name: string;
+    profile_image_url_https: string;
+  };
+}
+
+export default (props: Props) => {
+  const source = {
+    uri: props.user.profile_image_url_https,
+  };
+  const name = props.user.screen_name;
+  // const source = React.useMemo(() => require('app/assets/images/dummy-avatar.png'), []);
+  // const name = 'hoge';
 
   return (
     <View style={styles.header}>
       <Avatar size={40} source={source} />
-      <Text style={styles.text}>@hippohack</Text>
+      <Text style={styles.text}>@{name}</Text>
     </View>
   );
 };

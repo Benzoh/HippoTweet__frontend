@@ -15,59 +15,42 @@ const styles = StyleSheet.create({
 export default function Sub() {
   const { navigate } = useNavigation();
   const [auth, setAuth] = useState();
+  const [user, setUser] = useState();
 
-  // console.log('__auth__', { auth });
+  console.log('__debug__', { auth, user });
   if (!auth) {
     retrieveData('TWITTER_TOKEN').then(result => {
       setAuth(result);
     });
   }
 
+  if (auth && !user) {
+    console.log('__debug__');
+    retrieveData('TWITTER_USER_INFO').then(result => {
+      setUser(result);
+    });
+  }
+
   // FIXME: これなんか微妙。
   useEffect(() => {
-    console.log('useEffect', { auth });
-  }, [auth]);
+    console.log('useEffect', { auth, user });
 
-  //  authorization: OAuth oauth_consumer_key="CONSUMER_API_KEY",
-  //  oauth_nonce="OAUTH_NONCE",
-  //  oauth_signature="OAUTH_SIGNATURE",
-  //  oauth_signature_method="HMAC-SHA1",
-  //  oauth_timestamp="OAUTH_TIMESTAMP",
-  //  oauth_token="ACCESS_TOKEN",
-  //  oauth_version="1.0"
-
-  // // TODO: ここからバックエンドに置かなあかんかも？
-  // fetch('https://api.twitter.com/1.1/users/show.json?screen_name=hippohack', {
-  //   headers: {
-  //     // Authorization: `Bearer ${auth.oauth_token}`,
-  //     oauth_consumer_key: "CONSUMER_API_KEY",
-  //     oauth_nonce: (() => {
-  //       const date = new Date();
-  //       return date.getTime();
-  //     })(),
-  //     oauth_signature: "OAUTH_SIGNATURE",
-  //     oauth_signature_method: "HMAC-SHA1",
-  //     oauth_timestamp: (() => {
-  //       const date = new Date();
-  //       return Math.floor(date.getTime() / 1000);
-  //     })(),
-  //     oauth_token: auth.oauth_token,
-  //     oauth_version: "1.0"
-  //   },
-  // })
-  //   .then((response) => response.json())
-  //   .then((responseJson) => {
-  //     console.log({ responseJson });
-  //   });
+    if (!auth || !user) {
+      removeData('TWITTER_USER_INFO').then(() => {
+        setUser(undefined);
+        navigate('Login');
+      });
+    }
+  }, [auth, navigate, user]);
 
   return (
     <View style={styles.container}>
-      <Text>{auth ? auth.screen_name : ''}</Text>
+      <Text>{user ? user.screen_name : ''}</Text>
       <Button
         title="Logout"
         onPress={() =>
           removeData('TWITTER_TOKEN').then(() => {
-            setAuth(null);
+            setAuth(undefined);
             navigate('Login');
           })
         }
