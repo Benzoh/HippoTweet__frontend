@@ -27,7 +27,6 @@ export default function Main() {
     setLoading(true);
 
     retrieveData('TWITTER_USER_INFO').then(result => {
-      console.log('__debug__', { result });
       if (!result) {
         navigate('Login');
       }
@@ -38,9 +37,7 @@ export default function Main() {
     });
   }, []);
 
-  console.log('__debug__', { user });
-
-  if (loading) {
+  if (!user || loading) {
     return (
       <View style={styles.loading}>
         <TextField> Loading... </TextField>

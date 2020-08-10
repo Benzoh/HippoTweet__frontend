@@ -14,43 +14,26 @@ const styles = StyleSheet.create({
 
 export default function Sub() {
   const { navigate } = useNavigation();
-  const [auth, setAuth] = useState();
   const [user, setUser] = useState();
 
-  console.log('__debug__', { auth, user });
-  if (!auth) {
-    retrieveData('TWITTER_TOKEN').then(result => {
-      setAuth(result);
-    });
-  }
-
-  if (auth && !user) {
-    console.log('__debug__');
+  useEffect(() => {
     retrieveData('TWITTER_USER_INFO').then(result => {
+      console.log('__debug__', { result });
+      if (!result) {
+        navigate('Login');
+      }
       setUser(result);
     });
-  }
-
-  // FIXME: これなんか微妙。
-  useEffect(() => {
-    console.log('useEffect', { auth, user });
-
-    if (!auth || !user) {
-      removeData('TWITTER_USER_INFO').then(() => {
-        setUser(undefined);
-        navigate('Login');
-      });
-    }
-  }, [auth, navigate, user]);
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Text>{user ? user.screen_name : ''}</Text>
+      <Text>{user ? '@' + user.screen_name : 'unknown'}</Text>
       <Button
         title="Logout"
         onPress={() =>
           removeData('TWITTER_TOKEN').then(() => {
-            setAuth(undefined);
+            setUser(undefined);
             navigate('Login');
           })
         }

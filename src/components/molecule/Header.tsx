@@ -31,12 +31,10 @@ interface Props {
 }
 
 export default (props: Props) => {
-  const source = {
-    uri: props.user.profile_image_url_https,
-  };
-  const name = props.user.screen_name;
-  // const source = React.useMemo(() => require('app/assets/images/dummy-avatar.png'), []);
-  // const name = 'hoge';
+  const source = props.user.profile_image_url_https
+    ? { uri: props.user.profile_image_url_https }
+    : React.useMemo(() => require('app/assets/images/dummy-avatar.png'), []);
+  const name = props.user.screen_name ? props.user.screen_name : 'unknown';
 
   return (
     <View style={styles.header}>
