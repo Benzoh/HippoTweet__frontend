@@ -43,14 +43,19 @@ const styles = StyleSheet.create({
 export default function Sub() {
   const { navigate } = useNavigation();
   const [user, setUser] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     retrieveData('TWITTER_USER_INFO').then(result => {
       console.log('__debug__', { result });
       if (!result) {
         navigate('Login');
       }
       setUser(result);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     });
   }, []);
 
@@ -58,7 +63,7 @@ export default function Sub() {
     return string.replace('_normal', '');
   }
 
-  if (!user) {
+  if (!user || loading) {
     return (
       <View style={styles.loading}>
         <Text> Loading... </Text>
