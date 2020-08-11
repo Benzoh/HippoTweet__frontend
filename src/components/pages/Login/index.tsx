@@ -2,13 +2,14 @@
 /* eslint-disable no-catch-shadow */
 /* eslint-disable react-native/no-color-literals */
 import React, { useState, useCallback } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, Button, AsyncStorage } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Button, AsyncStorage, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 // import { CONFIG } from 'app/src/constants/config';
 import * as AuthSession from 'expo-auth-session';
 import Constants from 'expo-constants';
 
 import { storeData } from 'app/src/lib/localStorage';
+import { COLOR } from 'app/src/constants/theme';
 
 const accessTokenURL = Constants.manifest.extra.accessTokenUrl;
 const requestTokenURL = Constants.manifest.extra.requestTokenUrl;
@@ -39,6 +40,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     marginTop: 40,
+  },
+  button: {
+    marginTop: 0,
+    width: 150,
+    height: 45,
+    borderRadius: 5,
+    backgroundColor: '#1da1f3',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonLabel: {
+    color: COLOR.WHITE,
+    fontSize: 16,
+  },
+  twIcon: {
+    width: 100,
+    height: 100,
   },
 });
 
@@ -113,8 +131,11 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
+      <Image style={styles.twIcon} source={require('app/assets/images/Twitter_Logo_Blue.png')} />
       <View>
-        <Button title="Login with Twitter" onPress={onLogin} />
+        <TouchableOpacity style={styles.button} onPress={onLogin}>
+          <Text style={styles.buttonLabel}>Login with Twitter</Text>
+        </TouchableOpacity>
       </View>
 
       {error !== undefined && <Text style={styles.error}>Error: {error}</Text>}

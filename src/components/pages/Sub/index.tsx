@@ -62,7 +62,7 @@ export default function Sub() {
     return (
       <View style={styles.loading}>
         <Text> Loading... </Text>
-      </View >
+      </View>
     );
   }
 
@@ -74,8 +74,12 @@ export default function Sub() {
         style={styles.button}
         onPress={() =>
           removeData('TWITTER_TOKEN').then(() => {
-            setUser(undefined);
-            navigate('Login');
+            // setUser(undefined);
+            // navigate('Login');
+            removeData('TWITTER_USER_INFO').then(() => {
+              setUser(undefined);
+              navigate('Login');
+            });
           })
         }
       >
