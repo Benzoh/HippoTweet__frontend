@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  Animated,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -44,16 +45,35 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'normal',
   },
+  // eslint-disable-next-line react-native/no-color-literals
+  alert: {
+    borderWidth: 1,
+    borderColor: '#b8daff',
+    borderRadius: 3,
+    padding: 5,
+    marginTop: 15,
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#004085',
+    backgroundColor: '#cce5ff',
+  },
 });
 
 export default () => {
   const [status, onChangeText] = React.useState('');
   const [auth, setAuth] = useState();
-  const [params, setParams] = useState();
+  const [alert, setAlert] = useState();
   // const iconName = 'ios-trash';
   const iconName = 'ios-close';
-
-  // console.log({ auth });
+  const fadeAnim = useRef(new Animated.Value(5)).current;
+  const fadeOut = () => {
+    // Will change fadeAnim value to 0 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
 
   useEffect(() => {
     retrieveData('TWITTER_TOKEN').then(result => {
@@ -61,6 +81,13 @@ export default () => {
       setAuth(result);
     });
   }, []);
+
+  if (alert) {
+    setTimeout(() => {
+      fadeOut();
+      // setAlert(null);
+    }, 2000);
+  }
 
   if (!auth) {
     return <Text>error!! you do not have authentication.</Text>;
@@ -88,11 +115,20 @@ export default () => {
               style={styles.button}
               textStyle={styles.buttonText}
               label="Tweet"
-              onPress={() => post({ auth, status })}
+              onPress={() =>
+                post({ auth, status }).then(res => {
+                  console.log({ res });
+                  setAlert('Tweeted.');
+                  onChangeText('');
+                })
+              }
             />
           </View>
         </View>
       </TouchableWithoutFeedback>
+      <Animated.View style={{ opacity: fadeAnim }}>
+        {alert && <Text style={styles.alert}>{alert}</Text>}
+      </Animated.View>
     </KeyboardAvoidingView>
   );
 };

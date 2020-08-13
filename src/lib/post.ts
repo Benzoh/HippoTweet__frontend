@@ -26,5 +26,5 @@ export default async function post(props: Props) {
   // console.log({ props });
   // console.log('url', tweetURL + toQueryString(props));
 
-  await fetch(tweetURL + toQueryString(props)).then(response => response.json());
+  return await fetch(tweetURL + toQueryString(props)).then(response => response.json());
 }
