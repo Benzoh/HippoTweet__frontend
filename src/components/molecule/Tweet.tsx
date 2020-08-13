@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -14,6 +14,7 @@ import { TextField } from 'app/src/components/atoms/TextField';
 import Button from 'app/src/components/atoms/Button';
 import { COLOR } from 'app/src/constants/theme';
 import post from 'app/src/lib/post';
+import { retrieveData } from 'app/src/lib/localStorage';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,9 +47,24 @@ const styles = StyleSheet.create({
 });
 
 export default () => {
-  const [value, onChangeText] = React.useState('');
+  const [status, onChangeText] = React.useState('');
+  const [auth, setAuth] = useState();
+  const [params, setParams] = useState();
   // const iconName = 'ios-trash';
   const iconName = 'ios-close';
+
+  // console.log({ auth });
+
+  useEffect(() => {
+    retrieveData('TWITTER_TOKEN').then(result => {
+      console.log({ result });
+      setAuth(result);
+    });
+  }, []);
+
+  if (!auth) {
+    return <Text>error!! you do not have authentication.</Text>;
+  }
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'position'} style={styles.container}>
@@ -56,7 +72,7 @@ export default () => {
         <View>
           <TextField
             label="What's going on?"
-            value={value}
+            value={status}
             style={styles.textField}
             onChangeText={text => onChangeText(text)}
           />
@@ -68,7 +84,12 @@ export default () => {
             <View style={{ paddingLeft: 5 }}>
               <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => onChangeText('')} />
             </View>
-            <Button style={styles.button} textStyle={styles.buttonText} label="Tweet" onPress={() => post(value)} />
+            <Button
+              style={styles.button}
+              textStyle={styles.buttonText}
+              label="Tweet"
+              onPress={() => post({ auth, status })}
+            />
           </View>
         </View>
       </TouchableWithoutFeedback>
