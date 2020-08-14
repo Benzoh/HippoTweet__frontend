@@ -12,6 +12,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { TextField } from 'app/src/components/atoms/TextField';
+import ImagePicker from 'app/src/components/atoms/ImagePicker';
 import Button from 'app/src/components/atoms/Button';
 import { COLOR } from 'app/src/constants/theme';
 import post from 'app/src/lib/post';
@@ -23,26 +24,28 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   textField: {
-    height: 160,
+    minHeight: 160,
+    maxHeight: 'auto',
     textAlignVertical: 'top',
     borderColor: COLOR.MAIN,
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
     fontSize: 18,
+    marginTop: 10,
   },
   buttonWrap: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 15,
+    marginTop: 5,
   },
   button: {
-    height: 40,
+    height: 30,
     width: 100,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'normal',
   },
   // eslint-disable-next-line react-native/no-color-literals
@@ -97,16 +100,6 @@ export default () => {
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'position'} style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
-          <TextField
-            label="What's going on?"
-            value={status}
-            style={styles.textField}
-            onChangeText={text => onChangeText(text)}
-          />
-          <View>
-            {/* TODO: Count */}
-            <Text style={{ textAlign: 'right', marginTop: Platform.OS === 'ios' ? 5 : 0 }}>0/140</Text>
-          </View>
           <View style={styles.buttonWrap}>
             <View style={{ paddingLeft: 5 }}>
               <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => onChangeText('')} />
@@ -124,6 +117,17 @@ export default () => {
               }
             />
           </View>
+          <TextField
+            label="What's going on?"
+            value={status}
+            style={styles.textField}
+            onChangeText={text => onChangeText(text)}
+          />
+          <View style={{ flex: 1, justifyContent: 'space-between' }}>
+            {/* TODO: Count */}
+            <Text style={{ textAlign: 'right', marginTop: Platform.OS === 'ios' ? 5 : 0 }}>0/140</Text>
+          </View>
+          <ImagePicker />
         </View>
       </TouchableWithoutFeedback>
       <Animated.View style={{ opacity: fadeAnim }}>
