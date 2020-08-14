@@ -18,12 +18,13 @@ function toQueryString(params) {
   return (
     '?oauth_token=' + params.auth.oauth_token +
     '&oauth_token_secret=' + params.auth.oauth_token_secret +
-    '&status=' + params.status
+    '&status=' + params.status.replace(/(\n)/g, '\\n')
   );
 }
 
 export default async function post(props: Props) {
-  // console.log({ props });
+  // console.log('status', props.status);
+  // console.log(props.status.replace(/(\n)/g, '\\n'));
   // console.log('url', tweetURL + toQueryString(props));
 
   return await fetch(tweetURL + toQueryString(props)).then(response => response.json());
