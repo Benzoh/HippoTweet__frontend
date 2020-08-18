@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-  callback: () => void;
+  action: () => void;
 }
 
 export default class ImagePicker extends React.Component {
@@ -72,7 +72,7 @@ export default class ImagePicker extends React.Component {
 
       if (!result.cancelled) {
         this.setState({ image: result.uri });
-        this.props.callback(true);
+        this.props.action();
       }
 
       console.log(result);

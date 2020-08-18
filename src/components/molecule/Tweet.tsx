@@ -67,6 +67,7 @@ export default () => {
   const [auth, setAuth] = useState();
   const [alert, setAlert] = useState();
   const [showKeyboard, setShowKeyboard] = useState(false);
+  const [hasImage, setHasImage] = useState(false);
 
   // const iconName = 'ios-trash';
   const iconName = 'ios-close';
@@ -79,17 +80,23 @@ export default () => {
       useNativeDriver: true,
     }).start();
   };
+  const handler = () => {
+    setHasImage(true);
+  };
 
   useEffect(() => {
     retrieveData('TWITTER_TOKEN').then(result => {
       console.log({ result });
       setAuth(result);
     });
-  }, []);
 
-  Keyboard.addListener('keyboardDidShow', () => {
-    setShowKeyboard(true);
-  });
+    Keyboard.addListener('keyboardDidShow', () => {
+      setShowKeyboard(true);
+    });
+    Keyboard.addListener('keyboardDidHide', () => {
+      setShowKeyboard(false);
+    });
+  }, []);
 
   if (alert) {
     setTimeout(() => {
@@ -105,7 +112,7 @@ export default () => {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'position'} style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ marginTop: showKeyboard ? 40 : 0 }}>
+        <View style={{ marginTop: showKeyboard && hasImage ? 60 : 0 }}>
           <View style={styles.buttonWrap}>
             <View style={{ paddingLeft: 5 }}>
               <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => onChangeText('')} />
@@ -133,7 +140,7 @@ export default () => {
             {/* TODO: Count */}
             <Text style={{ textAlign: 'right', marginTop: Platform.OS === 'ios' ? 5 : 0 }}>0/140</Text>
           </View>
-          <ImagePicker />
+          <ImagePicker action={handler} />
         </View>
       </TouchableWithoutFeedback>
       <Animated.View style={{ opacity: fadeAnim }}>
