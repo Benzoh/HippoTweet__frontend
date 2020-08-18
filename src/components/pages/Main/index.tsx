@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text as TextField, View, StyleSheet } from 'react-native';
+import { Text as TextField, View, StyleSheet, ScrollView, Keyboard, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Header from 'app/src/components/molecule/Header';
@@ -48,7 +48,9 @@ export default function Main() {
   return (
     <View style={styles.container}>
       <Header user={user} />
-      <Tweet />
+      <ScrollView>
+        <Tweet />
+      </ScrollView>
     </View>
   );
 }

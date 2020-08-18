@@ -66,6 +66,8 @@ export default () => {
   const [status, onChangeText] = React.useState('');
   const [auth, setAuth] = useState();
   const [alert, setAlert] = useState();
+  const [showKeyboard, setShowKeyboard] = useState(false);
+
   // const iconName = 'ios-trash';
   const iconName = 'ios-close';
   const fadeAnim = useRef(new Animated.Value(5)).current;
@@ -85,6 +87,10 @@ export default () => {
     });
   }, []);
 
+  Keyboard.addListener('keyboardDidShow', () => {
+    setShowKeyboard(true);
+  });
+
   if (alert) {
     setTimeout(() => {
       fadeOut();
@@ -99,7 +105,7 @@ export default () => {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'position'} style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View>
+        <View style={{ marginTop: showKeyboard ? 40 : 0 }}>
           <View style={styles.buttonWrap}>
             <View style={{ paddingLeft: 5 }}>
               <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => onChangeText('')} />
