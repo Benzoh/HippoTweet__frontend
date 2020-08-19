@@ -17,6 +17,25 @@ const styles = StyleSheet.create({
     marginTop: 25,
     borderRadius: 10,
   },
+  pickButton: {
+    width: 40,
+    height: 40,
+  },
+  removeIcon: {
+    //
+  },
+  removeIconButton: {
+    width: 40,
+    height: 40,
+    top: -40,
+    position: 'absolute',
+  },
+  removeIconWrap: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    position: 'relative',
+  },
 });
 
 interface Props {
@@ -34,15 +53,33 @@ export default class ImagePicker extends React.Component {
     };
   }
 
+  hasImage(image: string) {
+    return (
+      <View style={{ marginTop: -2 }}>
+        <Image source={{ uri: image }} style={styles.image} resizeMode="cover" />
+        <View style={styles.removeIconWrap}>
+          <TouchableOpacity onPress={this._removeImage} style={styles.removeIconButton}>
+            <Ionicons name={'md-remove-circle-outline'} size={32} color={COLOR.WHITE} style={styles.removeIcon} />
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity onPress={this._pickImage} style={styles.pickButton}>
+          <Ionicons name={'md-images'} size={32} color={COLOR.MAIN} style={styles.icon} />
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   render() {
     let { image } = this.state;
-    const iconName = 'md-images';
+
+    if (image) {
+      return this.hasImage(image);
+    }
 
     return (
       <View style={{ marginTop: -2 }}>
-        {image && <Image source={{ uri: image }} style={styles.image} resizeMode="cover" />}
-        <TouchableOpacity onPress={this._pickImage} style={styles.button}>
-          <Ionicons name={iconName} size={32} color={COLOR.MAIN} style={styles.icon} />
+        <TouchableOpacity onPress={this._pickImage} style={styles.pickButton}>
+          <Ionicons name={'md-images'} size={32} color={COLOR.MAIN} style={styles.icon} />
         </TouchableOpacity>
       </View>
     );
@@ -79,5 +116,9 @@ export default class ImagePicker extends React.Component {
     } catch (E) {
       console.log(E);
     }
+  };
+
+  _removeImage = () => {
+    this.setState({ image: null });
   };
 }
