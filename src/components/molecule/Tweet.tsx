@@ -140,7 +140,7 @@ export default () => {
             {/* TODO: Count */}
             <Text style={{ textAlign: 'right', marginTop: Platform.OS === 'ios' ? 5 : 0 }}>0/140</Text>
           </View>
-          <ImagePicker action={handler} />
+          <ImagePicker action={handler} auth={auth} />
         </View>
       </TouchableWithoutFeedback>
       <Animated.View style={{ opacity: fadeAnim }}>

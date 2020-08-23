@@ -6,6 +6,7 @@ import * as Permissions from 'expo-permissions';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { COLOR } from 'app/src/constants/theme';
+import upload from 'app/src/lib/mediaUpload';
 
 const styles = StyleSheet.create({
   icon: {
@@ -109,6 +110,7 @@ export default class ImagePicker extends React.Component {
 
       if (!result.cancelled) {
         this.setState({ image: result.uri });
+        upload({ auth: this.props.auth, fileUri: result.uri });
         this.props.action();
       }
 
