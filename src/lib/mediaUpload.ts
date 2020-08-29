@@ -29,7 +29,7 @@ export default async function mediaUpload(props: Props) {
 
   formData.append('oauth_token', props.auth.oauth_token);
   formData.append('oauth_token_secret', props.auth.oauth_token_secret);
-  formData.append('media_data', base64res);
+  formData.append('media_data', base64res.base64);
   // formData.append('media', { type: 'image/jpeg', uri: props.fileUri, name: props.fileUri.split('/').pop() });
 
   const params = {
@@ -57,14 +57,16 @@ export default async function mediaUpload(props: Props) {
   params.oauth_signature = signature;
 
   const headerParams = Object.keys(params)
+    .sort()
     .map(k => esc(k) + '=' + esc(params[k]))
-    .join(',');
+    .join(', ');
   console.log({ headerParams });
 
   const bound_text = '------------------------1ae47d990b354d1b00a4eea60e6b5b72';
   const headers = {
-    'Content-Type': 'multipart/form-data; boundary=' + bound_text,
-    'Authorization': 'OAuth ' + headerParams,
+    Accept: 'application/json',
+    Authorization: 'OAuth ' + headerParams,
+    // 'Content-Type': 'multipart/form-data; boundary=' + bound_text,
   };
   console.log({ headers });
 
