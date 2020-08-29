@@ -36,7 +36,7 @@ export default async function mediaUpload(props: Props) {
     oauth_consumer_key: API_KEY,
     oauth_nonce: Math.random().toString(32).substring(2),
     oauth_signature_method: 'HMAC-SHA1',
-    oauth_timestamp: Date.now(),
+    oauth_timestamp: Math.floor(Date.now() / 1000),
     oauth_token: props.auth.oauth_token,
     oauth_version: '1.0',
   };
