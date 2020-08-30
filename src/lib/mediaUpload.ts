@@ -27,10 +27,13 @@ export default async function mediaUpload(props: Props) {
 
   const formData = new FormData();
 
-  formData.append('oauth_token', props.auth.oauth_token);
-  formData.append('oauth_token_secret', props.auth.oauth_token_secret);
+  // formData.append('oauth_token', props.auth.oauth_token);
+  // formData.append('oauth_token_secret', props.auth.oauth_token_secret);
   formData.append('media_data', base64res.base64);
   // formData.append('media', { type: 'image/jpeg', uri: props.fileUri, name: props.fileUri.split('/').pop() });
+
+  // console.log({ formData });
+  console.log(JSON.stringify(formData));
 
   const params = {
     oauth_consumer_key: API_KEY,
@@ -62,18 +65,19 @@ export default async function mediaUpload(props: Props) {
     .join(', ');
   console.log({ headerParams });
 
-  const bound_text = '------------------------1ae47d990b354d1b00a4eea60e6b5b72';
+  const bound_text = '--h-i-p-p-o--------------1ae47d990b354d1b00a4eea60e6b5b72\r\n';
   const headers = {
-    Accept: 'application/json',
+    // Accept: 'application/json',
     Authorization: 'OAuth ' + headerParams,
     // 'Content-Type': 'multipart/form-data; boundary=' + bound_text,
+    'Content-Transfer-Encoding': 'base64',
   };
   console.log({ headers });
 
   return await fetch(uploadURL, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify(formData),
+    body: base64res.base64,
   })
     .then(response => {
       return response.json();
