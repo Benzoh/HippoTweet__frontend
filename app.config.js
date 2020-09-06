@@ -28,9 +28,6 @@ export default {
     requestTokenUrl: process.env.EXPO_REQUEST_TOKEN_URL,
     getUserObjectUrl: process.env.EXPO_GET_USER_OBJECT_URL,
     tweetUrl: process.env.EXPO_TWEET_URL,
-    uploadUrl: process.env.EXPO_MEDIA_UPLOAD_URL,
-    apiKey: process.env.API_KEY,
-    apiSecretKey: process.env.API_SECRET_KEY,
     backgroundColor: '#fafafa',
   },
 };
