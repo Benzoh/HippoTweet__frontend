@@ -107,14 +107,13 @@ export default class ImagePicker extends React.Component {
         aspect: [4, 4],
         quality: 1,
       });
+      console.log(result);
 
       if (!result.cancelled) {
         this.setState({ image: result.uri });
         upload({ auth: this.props.auth, fileUri: result.uri });
         this.props.action();
       }
-
-      console.log(result);
     } catch (E) {
       console.log(E);
     }
