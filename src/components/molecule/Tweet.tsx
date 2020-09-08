@@ -16,6 +16,7 @@ import ImagePicker from 'app/src/components/atoms/ImagePicker';
 import Button from 'app/src/components/atoms/Button';
 import { COLOR } from 'app/src/constants/theme';
 import post from 'app/src/lib/post';
+import { inputCount } from 'app/src/lib/inputCount';
 import { retrieveData } from 'app/src/lib/localStorage';
 
 const styles = StyleSheet.create({
@@ -60,6 +61,10 @@ const styles = StyleSheet.create({
     color: '#004085',
     backgroundColor: '#cce5ff',
   },
+  count: {
+    textAlign: 'right',
+    marginTop: Platform.OS === 'ios' ? 5 : 0,
+  },
 });
 
 export default () => {
@@ -68,6 +73,7 @@ export default () => {
   const [alert, setAlert] = useState();
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [hasImage, setHasImage] = useState(false);
+  const [count, setCount] = useState(0);
 
   // const iconName = 'ios-trash';
   const iconName = 'ios-close';
@@ -134,18 +140,28 @@ export default () => {
             label="What's going on?"
             value={status}
             style={styles.textField}
-            onChangeText={text => onChangeText(text)}
+            onChangeText={text => {
+              // console.log(inputCount(text, 'UTF-8'));
+              setCount(inputCount(text, 'UTF-8'));
+              onChangeText(text);
+            }}
           />
           <View style={{ flex: 1, justifyContent: 'space-between' }}>
             {/* TODO: Count */}
-            <Text style={{ textAlign: 'right', marginTop: Platform.OS === 'ios' ? 5 : 0 }}>0/140</Text>
+            <Text
+              style={{
+                textAlign: 'right',
+                marginTop: Platform.OS === 'ios' ? 5 : 0,
+                color: count > 140 ? 'red' : null,
+              }}
+            >
+              {count}/140
+            </Text>
           </View>
           {/* <ImagePicker action={handler} auth={auth} /> */}
         </View>
       </TouchableWithoutFeedback>
-      <Animated.View style={{ opacity: fadeAnim }}>
-        {alert && <Text style={styles.alert}>{alert}</Text>}
-      </Animated.View>
+      <Animated.View style={{ opacity: fadeAnim }}>{alert && <Text style={styles.alert}>{alert}</Text>}</Animated.View>
     </KeyboardAvoidingView>
   );
 };
