@@ -61,9 +61,16 @@ const styles = StyleSheet.create({
     color: '#004085',
     backgroundColor: '#cce5ff',
   },
-  count: {
-    textAlign: 'right',
-    marginTop: Platform.OS === 'ios' ? 5 : 0,
+  errorAlert: {
+    borderWidth: 1,
+    borderColor: '#f13d3d',
+    borderRadius: 3,
+    padding: 5,
+    marginTop: 15,
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#921e1e',
+    backgroundColor: '#f7b9b9',
   },
 });
 
@@ -75,6 +82,7 @@ export default () => {
   const [hasImage, setHasImage] = useState(false);
   const [count, setCount] = useState(0);
 
+  const overCharactersErrorText = 'Character count over.';
   // const iconName = 'ios-trash';
   const iconName = 'ios-close';
   const fadeAnim = useRef(new Animated.Value(5)).current;
@@ -127,13 +135,17 @@ export default () => {
               style={styles.button}
               textStyle={styles.buttonText}
               label="Tweet"
-              onPress={() =>
+              onPress={() => {
+                if (count > 140) {
+                  setAlert(overCharactersErrorText);
+                  return false;
+                }
                 post({ auth, status }).then(res => {
-                  console.log({ res });
+                  console.log('res', res._headers.status);
                   setAlert('Tweeted.');
                   onChangeText('');
-                })
-              }
+                });
+              }}
             />
           </View>
           <TextField
@@ -158,10 +170,13 @@ export default () => {
               {count}/140
             </Text>
           </View>
+          {/* TODO: pend */}
           {/* <ImagePicker action={handler} auth={auth} /> */}
         </View>
       </TouchableWithoutFeedback>
-      <Animated.View style={{ opacity: fadeAnim }}>{alert && <Text style={styles.alert}>{alert}</Text>}</Animated.View>
+      <Animated.View style={{ opacity: fadeAnim }}>
+        {alert && <Text style={alert === overCharactersErrorText ? styles.errorAlert : styles.alert}>{alert}</Text>}
+      </Animated.View>
     </KeyboardAvoidingView>
   );
 };
