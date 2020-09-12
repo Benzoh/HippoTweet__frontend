@@ -141,7 +141,15 @@ export default () => {
         <View style={{ marginTop: showKeyboard && hasImage ? 60 : 0 }}>
           <View style={styles.buttonWrap}>
             <View style={{ paddingLeft: 5 }}>
-              <Ionicons name={iconName} size={36} color={COLOR.MAIN} onPress={() => onChangeText('')} />
+              <Ionicons
+                name={iconName}
+                size={36}
+                color={COLOR.MAIN}
+                onPress={() => {
+                  onChangeText('');
+                  setCount(0);
+                }}
+              />
             </View>
             <Button
               style={styles.button}
