@@ -7,7 +7,6 @@ import Routes from 'app/src/routes';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('Main');
-  console.log({ currentPage });
 
   return (
     <NavigationContainer

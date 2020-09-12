@@ -28,6 +28,7 @@ export default {
     requestTokenUrl: process.env.EXPO_REQUEST_TOKEN_URL,
     getUserObjectUrl: process.env.EXPO_GET_USER_OBJECT_URL,
     tweetUrl: process.env.EXPO_TWEET_URL,
+    verifyCredentialsUrl: process.env.EXPO_VERIFY_CREDENTIALS_URL,
     backgroundColor: '#fafafa',
   },
 };

@@ -18,6 +18,7 @@ import { COLOR } from 'app/src/constants/theme';
 import post from 'app/src/lib/post';
 import { inputCount } from 'app/src/lib/inputCount';
 import { retrieveData } from 'app/src/lib/localStorage';
+import verifyCredentials from 'app/src/lib/verifyCredentials';
 
 const styles = StyleSheet.create({
   container: {
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
     color: '#004085',
     backgroundColor: '#cce5ff',
   },
+  // eslint-disable-next-line react-native/no-color-literals
   errorAlert: {
     borderWidth: 1,
     borderColor: '#f13d3d',
@@ -107,6 +109,7 @@ export default () => {
     Keyboard.addListener('keyboardDidShow', () => {
       setShowKeyboard(true);
     });
+
     Keyboard.addListener('keyboardDidHide', () => {
       setShowKeyboard(false);
     });
@@ -117,6 +120,15 @@ export default () => {
       fadeOut();
       // setAlert(null);
     }, 2000);
+  }
+
+  // トークンの有効確認
+  if (auth) {
+    verifyCredentials({ auth }).then(result => {
+      if (!result) {
+        return <Text>error!! you do not have authentication.</Text>;
+      }
+    });
   }
 
   if (!auth) {

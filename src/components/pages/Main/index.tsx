@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Text as TextField, View, StyleSheet, ScrollView, Keyboard, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Text } from 'react-native-paper/lib/typescript/src/components/Avatar/Avatar';
 
 import Header from 'app/src/components/molecule/Header';
 import Tweet from 'app/src/components/molecule/Tweet';
 import { retrieveData } from 'app/src/lib/localStorage';
-import { Text } from 'react-native-paper/lib/typescript/src/components/Avatar/Avatar';
 
 const styles = StyleSheet.create({
   container: {
