@@ -48,7 +48,7 @@ export default function Sub() {
   useEffect(() => {
     setLoading(true);
     retrieveData('TWITTER_USER_INFO').then(result => {
-      console.log('__debug__', { result });
+      // console.log('__debug__', { result });
       if (!result) {
         navigate('Login');
       }

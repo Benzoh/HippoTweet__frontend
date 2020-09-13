@@ -83,6 +83,7 @@ export default () => {
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [hasImage, setHasImage] = useState(false);
   const [count, setCount] = useState(0);
+  const [verifyCredential, setVerifyCredential] = useState(false);
 
   const overCharactersErrorText = 'Character count over.';
   // const iconName = 'ios-trash';
@@ -102,7 +103,7 @@ export default () => {
 
   useEffect(() => {
     retrieveData('TWITTER_TOKEN').then(result => {
-      console.log({ result });
+      // console.log({ result });
       setAuth(result);
     });
 
@@ -122,14 +123,17 @@ export default () => {
     }, 2000);
   }
 
+  // FIXME: とりま放置
   // トークンの有効確認
-  if (auth) {
-    verifyCredentials({ auth }).then(result => {
-      if (!result) {
-        return <Text>error!! you do not have authentication.</Text>;
-      }
-    });
-  }
+  // if (auth && !verifyCredential) {
+  //   console.log({ verifyCredential });
+  //   verifyCredentials({ auth }).then(result => {
+  //     if (!result) {
+  //       return <Text>error!! you do not have authentication.</Text>;
+  //     }
+  //     setVerifyCredential(result);
+  //   });
+  // }
 
   if (!auth) {
     return <Text>error!! you do not have authentication.</Text>;
@@ -161,9 +165,10 @@ export default () => {
                   return false;
                 }
                 post({ auth, status }).then(res => {
-                  console.log('res', res._headers.status);
+                  // console.log('res', res._headers.status);
                   setAlert('Tweeted.');
                   onChangeText('');
+                  setCount(0);
                 });
               }}
             />
