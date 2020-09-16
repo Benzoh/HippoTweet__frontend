@@ -5,7 +5,7 @@ export default {
   slug: 'hippotweet',
   version: '1.0.0',
   orientation: 'portrait',
-  icon: './assets/images/icon.png',
+  icon: './assets/images/hippo.png',
   scheme: 'hippotweet',
   userInterfaceStyle: 'automatic',
   splash: {
@@ -19,6 +19,12 @@ export default {
   assetBundlePatterns: ['**/*'],
   ios: {
     supportsTablet: true,
+    bundleIdentifier: 'me.hippohack.hippotweet',
+    buildNumber: '1.0.0',
+  },
+  android: {
+    package: 'me.hippohack.hippotweet',
+    versionCode: 1,
   },
   web: {
     favicon: './assets/images/favicon.png',
