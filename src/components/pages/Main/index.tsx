@@ -5,6 +5,7 @@ import { Text } from 'react-native-paper/lib/typescript/src/components/Avatar/Av
 
 import Header from 'app/src/components/molecule/Header';
 import Tweet from 'app/src/components/molecule/Tweet';
+import BannerAd from 'app/src/components/atoms/BannerAd';
 import { retrieveData } from 'app/src/lib/localStorage';
 
 const styles = StyleSheet.create({
@@ -50,6 +51,7 @@ export default function Main() {
       <Header user={user} />
       <ScrollView>
         <Tweet />
+        <BannerAd />
       </ScrollView>
     </View>
   );

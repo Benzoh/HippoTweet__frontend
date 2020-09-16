@@ -28,6 +28,7 @@
     "crypto-random-string": "^3.3.0",
     "dotenv": "^8.2.0",
     "expo": "~38.0.8",
+    "expo-ads-admob": "~8.2.1",
     "expo-asset": "~8.1.7",
     "expo-auth-session": "^1.4.1",
     "expo-constants": "~9.1.1",

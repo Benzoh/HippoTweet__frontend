@@ -21,10 +21,16 @@ export default {
     supportsTablet: true,
     bundleIdentifier: 'me.hippohack.hippotweet',
     buildNumber: '1.0.0',
+    config: {
+      googleMobileAdsAppId: 'ca-app-pub-7815961604338808~7422370508',
+    },
   },
   android: {
     package: 'me.hippohack.hippotweet',
     versionCode: 1,
+    config: {
+      googleMobileAdsAppId: 'ca-app-pub-7815961604338808~9030965647',
+    },
   },
   web: {
     favicon: './assets/images/favicon.png',
