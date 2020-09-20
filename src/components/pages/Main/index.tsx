@@ -26,16 +26,20 @@ export default function Main() {
 
   useEffect(() => {
     setLoading(true);
-
-    retrieveData('TWITTER_USER_INFO').then(result => {
-      if (!result) {
-        navigate('Login');
-      }
-      setUser(result);
-      setTimeout(() => {
+    retrieveData('TWITTER_USER_INFO')
+      .then(result => {
+        if (!result) {
+          navigate('Login');
+        }
+        return result;
+      })
+      .then(result => {
+        console.log('__result__', { result });
+        setUser(result);
+      })
+      .then(() => {
         setLoading(false);
-      }, 2000);
-    });
+      });
   }, []);
 
   if (!user || loading) {

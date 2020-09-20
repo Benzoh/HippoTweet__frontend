@@ -47,16 +47,19 @@ export default function Sub() {
 
   useEffect(() => {
     setLoading(true);
-    retrieveData('TWITTER_USER_INFO').then(result => {
-      // console.log('__debug__', { result });
-      if (!result) {
-        navigate('Login');
-      }
-      setUser(result);
-      setTimeout(() => {
+    retrieveData('TWITTER_USER_INFO')
+      .then(result => {
+        if (!result) {
+          navigate('Login');
+        }
+        return result;
+      })
+      .then(result => {
+        setUser(result);
+      })
+      .then(() => {
         setLoading(false);
-      }, 2000);
-    });
+      });
   }, []);
 
   function largeProfileImage(string: string) {
@@ -81,10 +84,13 @@ export default function Sub() {
           removeData('TWITTER_TOKEN').then(() => {
             // setUser(undefined);
             // navigate('Login');
-            removeData('TWITTER_USER_INFO').then(() => {
-              setUser(undefined);
-              navigate('Login');
-            });
+            removeData('TWITTER_USER_INFO')
+              .then(() => {
+                setUser(undefined);
+              })
+              .then(() => {
+                navigate('Login');
+              });
           })
         }
       >
