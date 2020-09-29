@@ -4,11 +4,10 @@ import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
-// import Main from 'app/src/routes/Tab/Main';
 import Main from 'app/src/components/pages/Main';
 import Sub from 'app/src/components/pages/Sub';
 import Login from 'app/src/components/pages/Login';
+import Initial from 'app/src/components/pages/Initial';
 import { COLOR } from 'app/src/constants/theme';
 
 const Stack = createStackNavigator();
@@ -45,7 +44,7 @@ function MainTabNavigator() {
 
 export default function SubNavigator() {
   return (
-    <Stack.Navigator headerMode="none" initialRouteName="Main">
+    <Stack.Navigator headerMode="none" initialRouteName="Initial">
       <Stack.Screen
         name="Main"
         component={MainTabNavigator}
@@ -73,6 +72,7 @@ export default function SubNavigator() {
         })}
       />
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Initial" component={Initial} />
     </Stack.Navigator>
   );
 }

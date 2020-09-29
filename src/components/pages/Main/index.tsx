@@ -34,14 +34,17 @@ export default function Main() {
         return result;
       })
       .then(result => {
-        console.log('__result__', { result });
+        // console.log('__result__', { result });
         setUser(result);
       })
       .then(() => {
         setLoading(false);
+        // console.log('hoge!!!');
+        // console.log({ loading });
       });
   }, []);
 
+  // FIXME: ここが問題ぽい。
   if (!user || loading) {
     return (
       <View style={styles.loading}>

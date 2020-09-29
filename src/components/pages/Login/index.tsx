@@ -78,7 +78,7 @@ export default function Login() {
   const { navigate } = useNavigation();
 
   const onLogin = useCallback(async () => {
-    setLoading(true);
+    // setLoading(true);
 
     try {
       // Step #1 - first we need to fetch a request token to start the browser-based authentication flow
@@ -114,18 +114,16 @@ export default function Login() {
       });
       const userObject = await fetch(getUserObjectURL + accessParams2).then(res => res.json());
 
-      storeData('TWITTER_USER_INFO', userObject[0])
-        .then(() => {
-          navigate('Main');
-        })
-        .catch(() => {
-          console.log('store data error;');
-        });
+      storeData('TWITTER_USER_INFO', userObject[0]);
+      console.log('**** 1 ****');
     } catch (error) {
       console.log('Something went wrong...', error);
       setError(error.message);
     } finally {
-      setLoading(false);
+      console.log('**** 2 ****');
+      navigate('Sub');
+      // navigate('Initial');
+      // setLoading(false);
     }
   }, []);
 

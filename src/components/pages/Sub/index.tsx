@@ -59,6 +59,8 @@ export default function Sub() {
       })
       .then(() => {
         setLoading(false);
+        console.log('fuga!!!');
+        // console.log({ loading });
       });
   }, []);
 
@@ -89,7 +91,8 @@ export default function Sub() {
                 setUser(undefined);
               })
               .then(() => {
-                navigate('Login');
+                // navigate('Login');
+                navigate('Initial');
               });
           })
         }
