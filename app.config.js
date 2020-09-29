@@ -5,7 +5,7 @@ export default {
   slug: 'hippotweet',
   version: '1.0.0',
   orientation: 'portrait',
-  icon: './assets/images/hippo.png',
+  icon: './assets/images/app-icon.png',
   scheme: 'hippotweet',
   userInterfaceStyle: 'automatic',
   splash: {
