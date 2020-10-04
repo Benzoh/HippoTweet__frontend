@@ -58,6 +58,9 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
+  backLink: {
+    marginTop: 15,
+  },
 });
 
 /**
@@ -134,6 +137,7 @@ export default function Login() {
         <TouchableOpacity style={styles.button} onPress={onLogin}>
           <Text style={styles.buttonLabel}>Login with Twitter</Text>
         </TouchableOpacity>
+        <Text style={styles.backLink} onPress={() => navigate('Initial')}>← Back</Text>
       </View>
 
       {error !== undefined && <Text style={styles.error}>Error: {error}</Text>}
