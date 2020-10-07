@@ -59,7 +59,6 @@ export default function Sub() {
       })
       .then(() => {
         setLoading(false);
-        console.log('fuga!!!');
         // console.log({ loading });
       });
   }, []);

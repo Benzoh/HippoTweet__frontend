@@ -60,7 +60,7 @@ export default function SubNavigator() {
       />
       <Stack.Screen
         name="Sub"
-        component={Sub}
+        component={MainTabNavigator}
         options={({ navigation }) => ({
           headerTitleAlign: 'center',
           headerLeft: () => <HeaderBackButton onPress={() => navigation.navigate('Main')} />,
