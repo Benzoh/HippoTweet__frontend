@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text as TextField, View, StyleSheet, ScrollView, Keyboard, Alert } from 'react-native';
+import { Text as TextField, View, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Text } from 'react-native-paper/lib/typescript/src/components/Avatar/Avatar';
 
 import Header from 'app/src/components/molecule/Header';
 import Tweet from 'app/src/components/molecule/Tweet';
@@ -42,7 +41,7 @@ export default function Main() {
         // console.log('hoge!!!');
         // console.log({ loading });
       });
-  }, []);
+  }, [navigate]);
 
   // FIXME: ここが問題ぽい。
   if (!user || loading) {

@@ -45,7 +45,6 @@ export default function Initial() {
     }
   });
 
-  // TODO: ファーストビュー画面
   return (
     <View style={styles.container}>
       <Text style={styles.appName}>HippoTweet!</Text>

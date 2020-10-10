@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, AsyncStorage, Button } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { retrieveData, removeData } from 'app/src/lib/localStorage';
@@ -61,7 +61,7 @@ export default function Sub() {
         setLoading(false);
         // console.log({ loading });
       });
-  }, []);
+  }, [navigate]);
 
   function largeProfileImage(string: string) {
     return string.replace('_normal', '');
