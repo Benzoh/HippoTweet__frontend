@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
-/* eslint-disable no-catch-shadow */
 /* eslint-disable react-native/no-color-literals */
 import React, { useState, useCallback } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, Button, AsyncStorage, TouchableOpacity, Image } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 // import { CONFIG } from 'app/src/constants/config';
 import * as AuthSession from 'expo-auth-session';
@@ -58,12 +57,15 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
+  backLink: {
+    marginTop: 15,
+  },
 });
 
 /**
  * Converts an object to a query string.
  */
-function toQueryString(params) {
+function toQueryString(params: object) {
   return (
     '?' +
     Object.entries(params)
@@ -114,20 +116,16 @@ export default function Login() {
       });
       const userObject = await fetch(getUserObjectURL + accessParams2).then(res => res.json());
 
-      storeData('TWITTER_USER_INFO', userObject[0])
-        .then(() => {
-          navigate('Main');
-        })
-        .catch(() => {
-          console.log('store data error;');
-        });
-    } catch (error) {
-      console.log('Something went wrong...', error);
-      setError(error.message);
+      storeData('TWITTER_USER_INFO', userObject[0]);
+    } catch (_error) {
+      // console.log('Something went wrong...', _error);
+      setError(_error.message);
     } finally {
+      navigate('Sub');
+      // navigate('Initial');
       setLoading(false);
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <View style={styles.container}>
@@ -136,6 +134,9 @@ export default function Login() {
         <TouchableOpacity style={styles.button} onPress={onLogin}>
           <Text style={styles.buttonLabel}>Login with Twitter</Text>
         </TouchableOpacity>
+        <Text style={styles.backLink} onPress={() => navigate('Initial')}>
+          ← Back
+        </Text>
       </View>
 
       {error !== undefined && <Text style={styles.error}>Error: {error}</Text>}

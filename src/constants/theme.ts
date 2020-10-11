@@ -7,4 +7,5 @@ export const COLOR = {
   WHITE: '#fff',
   CAROUSEL_BACKGROUND: 'rgba(0, 0, 0, 0.5)',
   CAUTION: '#ff0000',
+  GREEN: '#01c68b',
 };
