@@ -12,7 +12,7 @@ const styles = {
 
 export default function BannerAd() {
   function bannerError() {
-    console.log('Ad Fail error');
+    console.log('Ad Fail error!!');
   }
 
   return (
@@ -22,8 +22,8 @@ export default function BannerAd() {
           __DEV__
             ? 'ca-app-pub-3940256099942544/6300978111' // テスト広告
             : Platform.select({
-              ios: Constants.manifest.ios.config.googleMobileAdsAppId,
-              android: Constants.manifest.android.config.googleMobileAdsAppId,
+              ios: 'ca-app-pub-7815961604338808/9433633783',
+              android: 'ca-app-pub-7815961604338808/9884882312',
             })
         }
         onDidFailToReceiveAdWithError={bannerError}
