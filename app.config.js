@@ -9,9 +9,9 @@ export default {
   scheme: 'hippotweet',
   userInterfaceStyle: 'automatic',
   splash: {
-    image: './assets/images/app-icon.png',
+    image: './assets/images/splash.png',
     resizeMode: 'contain',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#1FC68C',
   },
   updates: {
     fallbackToCacheTimeout: 0,
