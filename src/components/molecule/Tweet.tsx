@@ -83,6 +83,7 @@ export default () => {
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [hasImage, setHasImage] = useState(false);
   const [count, setCount] = useState(0);
+  const [isSubmitting, setSubmitting] = useState(false);
   const [verifyCredential, setVerifyCredential] = useState(false);
 
   const overCharactersErrorText = 'Character count over.';
@@ -141,7 +142,7 @@ export default () => {
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'position'} style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback>
         <View style={{ marginTop: showKeyboard && hasImage ? 60 : 0 }}>
           <View style={styles.buttonWrap}>
             <View style={{ paddingLeft: 5 }}>
@@ -159,7 +160,10 @@ export default () => {
               style={styles.button}
               textStyle={styles.buttonText}
               label="Tweet"
+              disabled={isSubmitting}
+              loading={isSubmitting}
               onPress={() => {
+                setSubmitting(true);
                 if (count > 140) {
                   setAlert(overCharactersErrorText);
                   return false;
@@ -169,6 +173,7 @@ export default () => {
                   setAlert('Tweeted.');
                   onChangeText('');
                   setCount(0);
+                  setSubmitting(false);
                 });
               }}
             />
