@@ -3,15 +3,15 @@ import 'dotenv/config';
 export default {
   name: 'HippoTweet!',
   slug: 'hippotweet',
-  version: '0.1.1',
+  version: '0.2.0',
   orientation: 'portrait',
   icon: './assets/images/app-icon.png',
   scheme: 'hippotweet',
   userInterfaceStyle: 'automatic',
   splash: {
-    image: './assets/images/app-icon.png',
+    image: './assets/images/splash.png',
     resizeMode: 'contain',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#1FC68C',
   },
   updates: {
     fallbackToCacheTimeout: 0,
@@ -20,14 +20,14 @@ export default {
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'me.hippohack.hippotweet',
-    buildNumber: '0.1.1',
+    buildNumber: '0.2.0',
     config: {
       googleMobileAdsAppId: 'ca-app-pub-7815961604338808~7422370508',
     },
   },
   android: {
     package: 'me.hippohack.hippotweet',
-    versionCode: 4,
+    versionCode: 5,
     config: {
       googleMobileAdsAppId: 'ca-app-pub-7815961604338808~9030965647',
     },

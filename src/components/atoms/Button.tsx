@@ -21,6 +21,7 @@ interface Props {
   disabledColor?: string;
   icon?: string;
   testID?: string;
+  loading?: boolean;
 }
 
 export default function Button(props: Props) {
@@ -34,6 +35,7 @@ export default function Button(props: Props) {
     disabledColor = '#ccc',
     icon,
     testID,
+    loading,
   } = props;
 
   return (
@@ -47,6 +49,7 @@ export default function Button(props: Props) {
       }}
       icon={icon}
       testID={testID}
+      loading={loading}
     >
       {label && <Text style={[styles.text, textStyle]}>{label}</Text>}
     </PaperButton>
