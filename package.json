@@ -43,7 +43,7 @@
     "expo-splash-screen": "~0.3.1",
     "expo-status-bar": "^1.0.2",
     "expo-web-browser": "~8.3.1",
-    "file-type": "^15.0.0",
+    "file-type": "^16.5.4",
     "fs": "^0.0.1-security",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
